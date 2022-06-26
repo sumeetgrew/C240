@@ -11,6 +11,11 @@ package com.mycompany.hello;
  */
 public class Hello {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        int[] starNum = {100, 7, 1000, 5};
+        
+        for (int i=0; i < starNum.length; i++) {
+            String str = "*";
+            System.out.println(str.repeat(starNum[i]));
+        }
     }
 }
