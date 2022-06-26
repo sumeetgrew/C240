@@ -13,8 +13,13 @@ import java.util.List;
  * @author Sumeet
  */
 public class ClassRosterView {
-    private UserIO io = new UserIOConsoleImpl();
-
+    private UserIO io; //Create io
+    
+    //Constructor to initalize io
+    public ClassRosterView(UserIO io) {
+        this.io = io;
+    }
+    
     public int printMenuAndGetSelection() {
         io.print("Main Menu");
         io.print("1. List Students");
@@ -112,5 +117,11 @@ public class ClassRosterView {
     //Display all students banner
     public void displayDisplayAllBanner() {
         io.print("=== Display All Students ===");
+    }
+    
+    //Displays error message
+    public void displayErrorMessage(String errorMsg) {
+        io.print("=== ERROR ===");
+        io.print(errorMsg);
     }
 }
