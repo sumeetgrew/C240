@@ -4,11 +4,15 @@
  * and open the template in the editor.
  */
 package com.sg.classroster;
+import com.sg.classroster.controller.ClassRosterController;
 
 /**
  *
  * @author Sumeet
  */
 public class App {
-    
+    public static void main(String[] args) {
+        ClassRosterController controller = new ClassRosterController();
+        controller.run();
+    } 
 }

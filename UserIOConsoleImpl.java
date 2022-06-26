@@ -1,13 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.sg.classroster.ui;
+/*********************************
+* The Software Guild
+* Copyright (C) 2020 Wiley edu LLC - All Rights Reserved
+*********************************/
+package com.sg.classroster.io;
 
 /**
- *
- * @author Sumeet
+ * TSG Official Implementation of the UserIO interface
+ * May your view be ever in your favor!
+ * @author ahill
  */
 import java.util.Scanner;
 
@@ -211,5 +211,5 @@ public class UserIOConsoleImpl implements UserIO {
         } while (result < min || result > max);
         return result;
     }
-}
 
+}
