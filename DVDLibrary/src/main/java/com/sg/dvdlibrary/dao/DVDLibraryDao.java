@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface DVDLibraryDao {
     /**
-     * Adds the given Student to the roster and associates it with the given 
+     * Adds the given DVD to the roster and associates it with the given 
      * student id. If there is already a student associated with the given 
      * student id it will return that student object, otherwise it will 
      * return null.
@@ -23,7 +23,7 @@ public interface DVDLibraryDao {
  student id if it exists, null otherwise
      * @throws DVDLibraryDaoException
      */
-    DVD addDVD(String studentId, DVD student)
+    DVD addDVD(String dvdTitle, DVD dvd)
      throws DVDLibraryDaoException;
 
     /**
@@ -44,7 +44,7 @@ public interface DVDLibraryDao {
  null if no such student exists
      * @throws DVDLibraryDaoException
      */
-    DVD getDVD(String studentId)
+    DVD getDVD(String dvdTitle)
      throws DVDLibraryDaoException;
 
     /**
@@ -57,6 +57,9 @@ public interface DVDLibraryDao {
  was associated with the given student id
      * @throws DVDLibraryDaoException
      */
-    DVD removeDVD(String studentId)
+    DVD removeDVD(String dvdTitle)
+     throws DVDLibraryDaoException;
+    
+    DVD editDVD(String dvdTitle, DVD dvd)
      throws DVDLibraryDaoException;
 }

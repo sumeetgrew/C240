@@ -48,7 +48,7 @@ public class DVDLibraryController {
                         removeDVD();
                         break;
                     case 6:
-                        //editDVD();
+                        editDVD();
                         break;
                     case 7:
                         //editMultipleDVDs();
@@ -76,8 +76,8 @@ public class DVDLibraryController {
     private void createDVD() throws DVDLibraryDaoException {
         view.displayCreateDVDBanner();
         DVD newDVD = view.getNewDVDInfo();
-        dao.addDVD(newDVD.getTitle(), newDVD);
-        view.displayCreateSuccessBanner();
+        DVD addedDVD = dao.addDVD(newDVD.getTitle(), newDVD);
+        view.displayCreatedResult(addedDVD);
     }
     
     //Lists all the DVDs
@@ -101,6 +101,13 @@ public class DVDLibraryController {
         String dvdTitle = view.getDVDTitleChoice();
         DVD removedDVD = dao.removeDVD(dvdTitle);
         view.displayRemoveResult(removedDVD);
+    }
+    
+    private void editDVD() throws DVDLibraryDaoException {
+        view.displayEditDVDBanner();
+        DVD newDVD = view.getNewDVDInfo();
+        DVD editedDVD = dao.editDVD(newDVD.getTitle(), newDVD);
+        view.displayEditedResult(editedDVD);
     }
     
     //Displays if unkown command

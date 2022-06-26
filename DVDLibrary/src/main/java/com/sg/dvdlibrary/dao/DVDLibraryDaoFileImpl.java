@@ -186,9 +186,14 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
     public DVD addDVD(String dvdTitle, DVD dvdObj) 
      throws DVDLibraryDaoException {
         loadLibrary();
-        DVD newDVD = library.put(dvdTitle, dvdObj);
-        writeLibrary();
-        return newDVD;
+        DVD checkDVD = library.get(dvdTitle);
+        if (checkDVD != null) {
+            return null;
+        } else {
+            DVD newDVD = library.put(dvdTitle, dvdObj);
+            writeLibrary();
+            return newDVD;
+        }
     }
 
     @Override
@@ -209,8 +214,23 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
     public DVD removeDVD (String dvdTitle) 
      throws DVDLibraryDaoException {
         loadLibrary();
-        DVD removedStudent = library.remove(dvdTitle);
+        DVD removedDVD = library.remove(dvdTitle);
         writeLibrary();
-        return removedStudent;
+        return removedDVD;
+    }
+    
+    @Override
+    public DVD editDVD (String dvdTitle, DVD dvd) 
+     throws DVDLibraryDaoException {
+        loadLibrary();
+        DVD editedDVD = library.get(dvdTitle);
+        if (editedDVD == null) {
+            return null;
+        } else {
+            DVD oldDVD = library.remove(dvdTitle);
+            DVD newDVD = library.put(dvdTitle, dvd);
+            writeLibrary();
+            return oldDVD;
+        }
     }
 }

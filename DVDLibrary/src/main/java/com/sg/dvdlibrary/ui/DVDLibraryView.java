@@ -19,15 +19,7 @@ public class DVDLibraryView {
     public DVDLibraryView(UserIO io) {
         this.io = io;
     }
-//    Allow the user to add a DVD to the collection --
-//    Allow the user to remove a DVD from the collection --
-//    Allow the user to edit the information for an existing --DVD in the collection
-//    Allow the user to list the DVDs in the collection --
-//    Allow the user to display the information for a particular DVD--
-//    Allow the user to search for a DVD by title --
-//    Load the DVD library from a file
-//    Save the DVD library back to the file when the program completes
-//    Allow the user to add, edit, or delete many DVDs in one session --
+
     public int printMenuAndGetSelection() {
         io.print("Main Menu");
         io.print("1. List DVDs");
@@ -39,7 +31,7 @@ public class DVDLibraryView {
         io.print("7. Edit multiple DVDs");
         io.print("8. Exit");
 
-        return io.readInt("Please select from the above choices.", 1, 5);
+        return io.readInt("Please select from the above choices.", 1, 8);
     }
     
     //Prompts for DVD info, then creates and returns a new DVD
@@ -68,16 +60,20 @@ public class DVDLibraryView {
         io.print("=== Create DVD ===");
     }
     //Displays a message the DVD was successfully created
-    public void displayCreateSuccessBanner() {
-        io.readString(
-                "DVD successfully created.  Please hit enter to continue");
+    public void displayCreatedResult(DVD dvd) {
+        if(dvd != null){
+          io.print("DVD successfully created.");
+        }else{
+          io.print("DVD already exists.");
+        }
+        io.readString("Please hit enter to continue.");
     }
     
     //Takes list of DVDs and displays them, waiting for enter key
     //  Title::Director::Studio::Release::MPAA:UserRating
     public void displayStudentList(List<DVD> dvdList) {
         for (DVD currentDVD : dvdList) {
-            String dvdInfo = String.format("#%s by %s and %s : %s : %s : %s",
+            String dvdInfo = String.format("%s by %s and %s : %s : %s : %s",
                   currentDVD.getTitle(),
                   currentDVD.getDirector(),
                   currentDVD.getStudio(),
@@ -116,9 +112,19 @@ public class DVDLibraryView {
         io.readString("Please hit enter to continue.");
     }
     
+    //Display DVD being edited
+    public void displayEditedResult(DVD dvd) {
+        if (dvd != null) {
+            io.print("Successfully edited DVD.");
+        } else {
+            io.print("No such DVD.");
+        }
+        io.readString("Please hit enter to continue.");
+    }
+    
     //Displays exit banner
     public void displayExitBanner() {
-        io.print("Good Bye!!!");
+        io.print("=== Exiting Library ===");
     }
     
     //Dispays unknown command banner
@@ -126,17 +132,17 @@ public class DVDLibraryView {
         io.print("Unknown Command!!!");
     }
     
-    //Banner for displaying remove student
+    //Banner for displaying remove DVD
     public void displayRemoveDVDBanner () {
         io.print("=== Remove DVD ===");
     }
     
-    //Banner for displaying single student
+    //Banner for displaying single DVD
     public void displayDisplayDVDBanner () {
         io.print("=== Display DVD ===");
     }
 
-    //Helper method to get the student ID
+    //Helper method to get the DVD title
     public String getDVDTitleChoice() {
         return io.readString("Please enter the DVD Title.");
     }
@@ -150,5 +156,10 @@ public class DVDLibraryView {
     public void displayErrorMessage(String errorMsg) {
         io.print("=== ERROR ===");
         io.print(errorMsg);
+    }
+    
+    //Displays edit banner
+    public void displayEditDVDBanner() {
+        io.print("=== EDIT DVD ===");
     }
 }
