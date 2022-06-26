@@ -192,7 +192,7 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
         } else {
             DVD newDVD = library.put(dvdTitle, dvdObj);
             writeLibrary();
-            return newDVD;
+            return dvdObj;
         }
     }
 

@@ -73,11 +73,11 @@ public class DVDLibraryView {
     //  Title::Director::Studio::Release::MPAA:UserRating
     public void displayStudentList(List<DVD> dvdList) {
         for (DVD currentDVD : dvdList) {
-            String dvdInfo = String.format("%s by %s and %s : %s : %s : %s",
+            String dvdInfo = String.format("%s (%s) by %s and %s : %s : %s",
                   currentDVD.getTitle(),
+                  currentDVD.getRelease(),
                   currentDVD.getDirector(),
                   currentDVD.getStudio(),
-                  currentDVD.getRelease(),
                   currentDVD.getMPAARating(),
                   currentDVD.getUserRating()
                   );
