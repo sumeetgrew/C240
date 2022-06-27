@@ -96,7 +96,8 @@ public class DVDLibraryController {
     private void viewDVDTitle() throws DVDLibraryDaoException {
        view.displayDisplayDVDTitleBanner();
        String dvdId = view.getDVDTitleChoice();
-       DVD dvd = dao.getDVDTitle(dvdId);
+       String dvdYear = view.getDVDYearChoice();
+       DVD dvd = dao.getDVDTitle(dvdId, dvdYear);
        view.displayDVD(dvd);
     }
     
@@ -108,26 +109,21 @@ public class DVDLibraryController {
         view.displayRemoveResult(removedDVD);
     }
     
+    //Edits a DVD by ID
     private void editDVD() throws DVDLibraryDaoException {
         view.displayEditDVDBanner();
         String dvdId = view.getDVDIdChoice();
         DVD checkDVD = dao.getDVD(dvdId);
-        if (checkDVD == null) {
-            //Does not exist
-            view.displayNotFoundBanner();
-        } else { //Does exist
-            DVD newDVD = view.getNewDVDInfo();
-            DVD editedDVD = dao.editDVD(checkDVD.getId(), newDVD);
+        if (checkDVD == null) { //If DVD does not exist
+            view.displayNotFoundBanner(); //Display not found
+        } else { //If DVD does exist
+            view.displayFoundBanner();
+            view.displayEditDVDBanner();
+            DVD newDVD = view.getNewDVDInfo(); //Request new info
+            DVD editedDVD = dao.editDVD(checkDVD.getId(), newDVD); //Edit DVD in dao
             view.displayEditedResult(editedDVD);
         }
     }
-    
-//    private void editDVD() throws DVDLibraryDaoException {
-//        view.displayEditDVDBanner();
-//        DVD newDVD = view.getNewDVDInfo();
-//        DVD editedDVD = dao.editDVD(newDVD.getId(), newDVD);
-//        view.displayEditedResult(editedDVD);
-//    }
     
     //Displays if unkown command
     private void unknownCommand() {

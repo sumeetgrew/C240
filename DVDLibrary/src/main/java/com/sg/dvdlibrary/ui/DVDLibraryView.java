@@ -19,7 +19,8 @@ public class DVDLibraryView {
     public DVDLibraryView(UserIO io) {
         this.io = io;
     }
-
+    
+    //Print our menu to user
     public int printMenuAndGetSelection() {
         io.print("Main Menu");
         io.print("1. List DVDs");
@@ -34,7 +35,6 @@ public class DVDLibraryView {
     }
     
     //Prompts for DVD info, then creates and returns a new DVD
-    //  Title::Director::Studio::Release::MPAA:UserRating
     public DVD getNewDVDInfo() {
         String dvdTitle = io.readString("Please enter the DVD's title");
         String director = io.readString("Please enter the director's name");
@@ -42,7 +42,8 @@ public class DVDLibraryView {
         String release = io.readString("Please enter the release date");
         String mpaa = io.readString("Please enter the MPAA rating");
         String userRating = io.readString("Please enter the user rating");
-        String id = dvdTitle.replaceAll("\\s+","") + release;
+        String id = dvdTitle.replaceAll("\\s+","") + release; //ID IS: title + date (all lowercase)
+        id = id.toLowerCase();
         
         DVD currentDVD = new DVD(id);
         
@@ -61,9 +62,17 @@ public class DVDLibraryView {
         io.print("=== Create DVD ===");
     }
     
+    //Banner if DVD found
+    //Banner if DVD is not found
+    public void displayFoundBanner() {
+        io.print("=== DVD Found ===");
+    }
+    
+    //Banner if DVD is not found
     public void displayNotFoundBanner() {
         io.print("=== DVD Not Found ===");
     }
+    
     //Displays a message the DVD was successfully created
     public void displayCreatedResult(DVD dvd) {
         if(dvd != null){
@@ -75,10 +84,10 @@ public class DVDLibraryView {
     }
     
     //Takes list of DVDs and displays them, waiting for enter key
-    //  Title::Director::Studio::Release::MPAA:UserRating
     public void displayDVDList(List<DVD> dvdList) {
         for (DVD currentDVD : dvdList) {
-            String dvdInfo = String.format("%s (%s) by %s and %s : %s : %s",
+            String dvdInfo = String.format("ID: %s  |  %s (%s) by %s and %s : %s : %s",
+                  currentDVD.getId(),
                   currentDVD.getTitle(),
                   currentDVD.getRelease(),
                   currentDVD.getDirector(),
@@ -94,13 +103,14 @@ public class DVDLibraryView {
     //Displays a single DVD
     public void displayDVD(DVD dvd) {
         if (dvd != null) {
-            io.print(dvd.getId());
-            io.print(dvd.getTitle());
-            io.print(dvd.getDirector());
-            io.print(dvd.getStudio());
-            io.print(dvd.getRelease());
-            io.print(dvd.getMPAARating());
-            io.print(dvd.getUserRating());
+            displayFoundBanner();
+            io.print("ID: " + dvd.getId());
+            io.print("Title: " + dvd.getTitle());
+            io.print("Director: " + dvd.getDirector());
+            io.print("Studio: " + dvd.getStudio());
+            io.print("Release Date: " + dvd.getRelease());
+            io.print("MPAA Rating: " + dvd.getMPAARating());
+            io.print("User Rating: " + dvd.getUserRating());
             io.print("");
         } else {
             io.print("No such DVD.");
@@ -157,6 +167,12 @@ public class DVDLibraryView {
     public String getDVDTitleChoice() {
         return io.readString("Please enter the DVD Title.");
     }
+    
+    //Helper method to get the DVD title
+    public String getDVDYearChoice() {
+        return io.readString("Please enter the DVD Year.");
+    }
+    
     //Helper method to get the DVD title
     public String getDVDIdChoice() {
         return io.readString("Please enter the DVD ID.");

@@ -47,7 +47,7 @@ public interface DVDLibraryDao {
     DVD getDVD(String dvdId)
      throws DVDLibraryDaoException;
     
-    DVD getDVDTitle(String dvdTitle)
+    DVD getDVDTitle(String dvdTitle, String dvdYear)
      throws DVDLibraryDaoException;
 
     /**
