@@ -44,12 +44,22 @@ public interface DVDLibraryDao {
  null if no such student exists
      * @throws DVDLibraryDaoException
      */
+    
+    //Gets the current DVD with the DVD id
     DVD getDVD(String dvdId)
      throws DVDLibraryDaoException;
     
+    //Gets the DVD with title only
+    DVD getDVDTitleOnly(String dvdTitle)
+     throws DVDLibraryDaoException;
+    
+    //Gets DVD with title and year
     DVD getDVDTitle(String dvdTitle, String dvdYear)
      throws DVDLibraryDaoException;
-
+    
+    //Counts numbeer of DVDs with the same name
+    int countDVD(String dvdTitle)
+     throws DVDLibraryDaoException;
     /**
      * Removes from the roster the student associated with the given id. 
      * Returns the student object that is being removed or null if 

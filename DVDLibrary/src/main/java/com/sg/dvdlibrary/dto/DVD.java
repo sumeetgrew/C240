@@ -16,7 +16,7 @@ public class DVD {
     private String director;
     private String studio;
     private String userRating;
-    private String id;
+    private String id; //Our ID
 
     public DVD(String id) {
         this.id= id;

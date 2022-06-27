@@ -95,10 +95,16 @@ public class DVDLibraryController {
     //Get's DVD title and views DVD
     private void viewDVDTitle() throws DVDLibraryDaoException {
        view.displayDisplayDVDTitleBanner();
-       String dvdId = view.getDVDTitleChoice();
-       String dvdYear = view.getDVDYearChoice();
-       DVD dvd = dao.getDVDTitle(dvdId, dvdYear);
-       view.displayDVD(dvd);
+       String dvdTitle = view.getDVDTitleChoice();
+       
+       if (dao.countDVD(dvdTitle) > 1) { //More than 1 - Ask for year
+           String dvdYear = view.getDVDYearChoice();
+           DVD dvd = dao.getDVDTitle(dvdTitle, dvdYear);
+           view.displayDVD(dvd);
+       } else {
+           DVD dvd = dao.getDVDTitleOnly(dvdTitle);
+           view.displayDVD(dvd);
+       }
     }
     
     //Removes a student given an ID

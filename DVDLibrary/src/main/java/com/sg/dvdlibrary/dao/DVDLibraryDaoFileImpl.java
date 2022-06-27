@@ -30,50 +30,36 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
     
     //Read text into a student object
     private DVD unmarshallDVD(String dvdAsText){
-        // studentAsText is expecting a line read in from our file.
-        // For example, it might look like this:
-        // 1234::Ada::Lovelace::Java-September1842
-        //
-        // We then split that line on our DELIMITER - which we are using as ::
-        // Leaving us with an array of Strings, stored in studentTokens.
-        // Which should look like this:
-        // ______________________________________
-        // |    |   |        |                  |
-        // |1234|Ada|Lovelace|Java-September1842|
-        // |    |   |        |                  |
-        // --------------------------------------
         //  [0]  [1]      [2]     [3]     [4]    [5]   [6]
         //  ID::Title::Director::Studio::Release::MPAA:UserRating
         String[] dvdTokens = dvdAsText.split(DELIMITER);
 
-        // Given the pattern above, the student Id is in index 0 of the array.
+        // Given the pattern above, the dvd Id is in index 0 of the array.
         String dvdId = dvdTokens[0];
 
         // Which we can then use to create a new DVD object to satisfy
         // the requirements of the DVD constructor.
         DVD dvdFromFile = new DVD(dvdId);
 
-        // However, there are 3 remaining tokens that need to be set into the
-        // new student object. Do this manually by using the appropriate setters.
-        
+        // Index 1 - Title
         dvdFromFile.setTitle(dvdTokens[1]);
         
-        // Index 1 - Director
+        // Index 2 - Director
         dvdFromFile.setDirector(dvdTokens[2]);
 
-        // Index 2 - Studio
+        // Index 3 - Studio
         dvdFromFile.setStudio(dvdTokens[3]);
         
-        //Index 3 - Release
+        //Index 4 - Release
         dvdFromFile.setRelease(dvdTokens[4]);
         
-        //Index 4 - MPAA Rating
+        //Index 5 - MPAA Rating
         dvdFromFile.setMPAARating(dvdTokens[5]);
         
-        //Index 5 - User Rating
+        //Index 6 - User Rating
         dvdFromFile.setUserRating(dvdTokens[6]);
 
-        // We have now created a student! Return it!
+        // We have now created a DVD! Return it!
         return dvdFromFile;
     }
     
@@ -92,9 +78,9 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
         }
         // currentLine holds the most recent line read from the file
         String currentLine;
-        // currentStudent holds the most recent student unmarshalled
+        // currentDVD holds the most recent student unmarshalled
         DVD currentDVD;
-        // Go through ROSTER_FILE line by line, decoding each line into a 
+        // Go through LIBRARY_FILE line by line, decoding each line into a 
         // DVD object by calling the unmarshallStudent method.
         // Process while we have more lines in the file
         while (scanner.hasNextLine()) {
@@ -103,8 +89,8 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
             // unmarshall the line into a DVD
             currentDVD = unmarshallDVD(currentLine);
 
-            // We are going to use the student id as the map key for our student object.
-            // Put currentStudent into the map using student id as the key
+            // We are going to use the DVD id as the map key for our DVD object.
+            // Put currentDVD into the map using student id as the key
             library.put(currentDVD.getId(), currentDVD);
         }
         // close scanner
@@ -114,8 +100,6 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
     //Creates a string for marshalling from a given student
     private String marshallDVD(DVD aDVD){
         // We need to turn a DVD object into a line of text for our file.
-        // For example, we need an in memory object to end up like this:
-        // 4321::Charles::Babbage::Java-September1842
 
         // Start with the DVD ID, since that's supposed to be first.
         String dvdAsText = aDVD.getId() + DELIMITER;
@@ -148,7 +132,7 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
     }
 
     /**
-     * Writes all students in the roster out to a ROSTER_FILE.  See loadRoster
+     * Writes all DVD in the roster out to a LIBRARY_FILE.  See loadRoster
      * for file format.
      *      Writes students into roster file
      * @throws DVDLibraryDaoException if an error occurs writing to the file
@@ -169,9 +153,9 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
         }
 
         // Write out the DVD objects to the roster file.
-        // NOTE TO THE APPRENTICES: We could just grab the student map,
-        // get the Collection of Students and iterate over them but we've
-        // already created a method that gets a List of Students so
+        // NOTE TO THE APPRENTICES: We could just grab the DVD map,
+        // get the Collection of DVDs and iterate over them but we've
+        // already created a method that gets a List of DVDs so
         // we'll reuse it.
         String dvdAsText;
         List<DVD> dvdList = this.getAllDVDs();
@@ -187,6 +171,7 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
         out.close();
     }
     
+    //Adds a DVD with id 
     @Override
     public DVD addDVD(String dvdId, DVD dvdObj) 
      throws DVDLibraryDaoException {
@@ -200,14 +185,16 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
             return dvdObj;
         }
     }
-
+    
+    //Retursn a list of all DVDs
     @Override
     public List<DVD> getAllDVDs() 
      throws DVDLibraryDaoException {
         loadLibrary();
         return new ArrayList(library.values());
     }
-
+    
+    //Returns a DVD
     @Override
     public DVD getDVD(String dvdId) 
      throws DVDLibraryDaoException {
@@ -215,6 +202,7 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
         return library.get(dvdId);
     }
     
+    //Returns DVD with matching title and year (if duplicate exists)
     @Override
     public DVD getDVDTitle(String dvdTitle, String dvdYear) 
      throws DVDLibraryDaoException {
@@ -226,7 +214,34 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
         }
         return null;
     }
-
+    
+    //Returns DVD with matching title only (means no duplicates)
+    @Override
+    public DVD getDVDTitleOnly(String dvdTitle) 
+     throws DVDLibraryDaoException {
+        loadLibrary();
+        for (DVD dvd : library.values()) {
+            if (dvd.getTitle().equals(dvdTitle)) {
+                return dvd;
+            }
+        }
+        return null;
+    }
+    
+    //Counts numbeer of DVDs with the same name
+    @Override
+    public int countDVD(String dvdTitle)
+     throws DVDLibraryDaoException{
+        int count = 0;
+        for (DVD dvd : library.values()) {
+            if (dvd.getTitle().equals(dvdTitle)) {
+                count++;
+            }
+        }
+        return count;
+    }
+    
+    //Removes DVD with ID
     @Override
     public DVD removeDVD (String dvdId) 
      throws DVDLibraryDaoException {
@@ -236,6 +251,7 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
         return removedDVD;
     }
     
+    //Edits DVD with ID and DVD object
     @Override
     public DVD editDVD (String dvdId, DVD dvd) 
      throws DVDLibraryDaoException {
