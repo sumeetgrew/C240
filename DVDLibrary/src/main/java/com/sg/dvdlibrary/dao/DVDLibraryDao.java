@@ -44,7 +44,10 @@ public interface DVDLibraryDao {
  null if no such student exists
      * @throws DVDLibraryDaoException
      */
-    DVD getDVD(String dvdTitle)
+    DVD getDVD(String dvdId)
+     throws DVDLibraryDaoException;
+    
+    DVD getDVDTitle(String dvdTitle)
      throws DVDLibraryDaoException;
 
     /**

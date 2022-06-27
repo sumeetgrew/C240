@@ -42,34 +42,36 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
         // |1234|Ada|Lovelace|Java-September1842|
         // |    |   |        |                  |
         // --------------------------------------
-        //  [0]      [1]       [2]    [3]     [4]   [5]
-        //  Title::Director::Studio::Release::MPAA:UserRating
+        //  [0]  [1]      [2]     [3]     [4]    [5]   [6]
+        //  ID::Title::Director::Studio::Release::MPAA:UserRating
         String[] dvdTokens = dvdAsText.split(DELIMITER);
 
         // Given the pattern above, the student Id is in index 0 of the array.
-        String dvdTitle = dvdTokens[0];
+        String dvdId = dvdTokens[0];
 
         // Which we can then use to create a new DVD object to satisfy
         // the requirements of the DVD constructor.
-        DVD dvdFromFile = new DVD(dvdTitle);
+        DVD dvdFromFile = new DVD(dvdId);
 
         // However, there are 3 remaining tokens that need to be set into the
         // new student object. Do this manually by using the appropriate setters.
-
+        
+        dvdFromFile.setTitle(dvdTokens[1]);
+        
         // Index 1 - Director
-        dvdFromFile.setDirector(dvdTokens[1]);
+        dvdFromFile.setDirector(dvdTokens[2]);
 
         // Index 2 - Studio
-        dvdFromFile.setStudio(dvdTokens[2]);
+        dvdFromFile.setStudio(dvdTokens[3]);
         
         //Index 3 - Release
-        dvdFromFile.setRelease(dvdTokens[3]);
+        dvdFromFile.setRelease(dvdTokens[4]);
         
         //Index 4 - MPAA Rating
-        dvdFromFile.setMPAARating(dvdTokens[4]);
+        dvdFromFile.setMPAARating(dvdTokens[5]);
         
         //Index 5 - User Rating
-        dvdFromFile.setUserRating(dvdTokens[5]);
+        dvdFromFile.setUserRating(dvdTokens[6]);
 
         // We have now created a student! Return it!
         return dvdFromFile;
@@ -103,7 +105,7 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
 
             // We are going to use the student id as the map key for our student object.
             // Put currentStudent into the map using student id as the key
-            library.put(currentDVD.getTitle(), currentDVD);
+            library.put(currentDVD.getId(), currentDVD);
         }
         // close scanner
         scanner.close();
@@ -115,13 +117,16 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
         // For example, we need an in memory object to end up like this:
         // 4321::Charles::Babbage::Java-September1842
 
-        // Start with the DVD title, since that's supposed to be first.
-        String dvdAsText = aDVD.getTitle() + DELIMITER;
+        // Start with the DVD ID, since that's supposed to be first.
+        String dvdAsText = aDVD.getId() + DELIMITER;
 
         // add the rest of the properties in the correct order:
         
-        //  [0]      [1]       [2]    [3]     [4]   [5]
-        //  Title::Director::Studio::Release::MPAA:UserRating
+        //  [0]  [1]      [2]     [3]     [4]    [5]   [6]
+        //  ID::Title::Director::Studio::Release::MPAA:UserRating
+        
+        //Title
+        dvdAsText += aDVD.getTitle() + DELIMITER;
         
         // Director
         dvdAsText += aDVD.getDirector() + DELIMITER;
@@ -183,14 +188,14 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
     }
     
     @Override
-    public DVD addDVD(String dvdTitle, DVD dvdObj) 
+    public DVD addDVD(String dvdId, DVD dvdObj) 
      throws DVDLibraryDaoException {
         loadLibrary();
-        DVD checkDVD = library.get(dvdTitle);
+        DVD checkDVD = library.get(dvdId);
         if (checkDVD != null) {
             return null;
         } else {
-            DVD newDVD = library.put(dvdTitle, dvdObj);
+            DVD newDVD = library.put(dvdId, dvdObj);
             writeLibrary();
             return dvdObj;
         }
@@ -204,33 +209,55 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
     }
 
     @Override
-    public DVD getDVD(String dvdTitle) 
+    public DVD getDVD(String dvdId) 
      throws DVDLibraryDaoException {
         loadLibrary();
-        return library.get(dvdTitle);
+        return library.get(dvdId);
+    }
+    
+    @Override
+    public DVD getDVDTitle(String dvdTitle) 
+     throws DVDLibraryDaoException {
+        loadLibrary();
+        for (DVD dvd : library.values()) {
+            if (dvd.getTitle().equals(dvdTitle)) {
+                return dvd;
+            }
+        }
+        return null;
     }
 
     @Override
-    public DVD removeDVD (String dvdTitle) 
+    public DVD removeDVD (String dvdId) 
      throws DVDLibraryDaoException {
         loadLibrary();
-        DVD removedDVD = library.remove(dvdTitle);
+        DVD removedDVD = library.remove(dvdId);
         writeLibrary();
         return removedDVD;
     }
     
     @Override
-    public DVD editDVD (String dvdTitle, DVD dvd) 
+    public DVD editDVD (String dvdId, DVD dvd) 
      throws DVDLibraryDaoException {
         loadLibrary();
-        DVD editedDVD = library.get(dvdTitle);
-        if (editedDVD == null) {
-            return null;
-        } else {
-            DVD oldDVD = library.remove(dvdTitle);
-            DVD newDVD = library.put(dvdTitle, dvd);
-            writeLibrary();
-            return oldDVD;
-        }
+        DVD oldDVD = library.remove(dvdId);
+        DVD newDVD = library.put(dvd.getId(), dvd);
+        writeLibrary();
+        return oldDVD;
     }
+    
+//    @Override
+//    public DVD editDVD (String dvdId, DVD dvd) 
+//     throws DVDLibraryDaoException {
+//        loadLibrary();
+//        DVD editedDVD = library.get(dvdId);
+//        if (editedDVD == null) {
+//            return null;
+//        } else {
+//            DVD oldDVD = library.remove(dvdId);
+//            DVD newDVD = library.put(dvdId, dvd);
+//            writeLibrary();
+//            return oldDVD;
+//        }
+//    }
 }

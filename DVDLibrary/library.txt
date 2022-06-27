@@ -1,4 +1,6 @@
-Iron Man::Jon Favreau::Marvel::2015::PG-13::Kk
-The Avengers::Joss Whedon::Marvel::2012::PG-13::Cartoon Violence
-Okra Man::1::1::1::1::1
-Super man::2::2::2::2::2
+IronMan2015::Iron Man::Jon Favreau::Marvel::2015::PG-13::Kk
+Thor:LoveandThunder2022::Thor: Love and Thunder::Tata::12::2022::OK::12
+Superman2::Super man::2::2::2::2::2
+newmovie2010::new movie::random::2010::2010::ok::ok
+IronMan2025::Iron Man::ok::ok::2025::ok::ok
+OkraMan1::Okra Man::1::1::1::1::1

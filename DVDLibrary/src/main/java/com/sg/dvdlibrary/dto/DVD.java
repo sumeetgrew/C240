@@ -16,8 +16,17 @@ public class DVD {
     private String director;
     private String studio;
     private String userRating;
+    private String id;
 
-    public DVD(String title) {
+    public DVD(String id) {
+        this.id= id;
+    }
+    
+    public String getId() {
+        return id;
+    }
+    
+    public void setTitle(String title) {
         this.title = title;
     }
     
