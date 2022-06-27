@@ -7,6 +7,6 @@ doctorstrange2016::Doctor Strange::Scott Derrickson::Marvel::2016::PG-13::Gore
 badboys1983::Bad Boys::Rick Rosenthal::Universal::1983::R::Very violent
 badboys1995::Bad Boys::Michael Bay::Columbia::1995::R::Cussing
 whiplash2014::Whiplash::Damien Chazelle::Sony::2014::R::Cussing
-theirishman::The Irishman::Martin Scorsese::Universal::2019::R::Gorey violence
+theirishman2019::The Irishman::Martin Scorsese::Universal::2019::R::Gorey violence
 parasite2019::Parasite::Bong Joon-ho::Universal::2019::R::Extreme violence
 snowpiercer2013::Snowpiercer::Bong Joon-ho::Universal::2013::R::Violence and gore
