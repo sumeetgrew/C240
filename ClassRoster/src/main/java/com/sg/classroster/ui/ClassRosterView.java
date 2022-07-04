@@ -54,6 +54,10 @@ public class ClassRosterView {
                 "Student successfully created.  Please hit enter to continue");
     }
     
+    public void displayRemoveSuccessBanner() {
+        io.print("==== Removed Successfully ====");
+    }
+    
     //Takes list of students and displays them, waiting for enter key
     public void displayStudentList(List<Student> studentList) {
         for (Student currentStudent : studentList) {

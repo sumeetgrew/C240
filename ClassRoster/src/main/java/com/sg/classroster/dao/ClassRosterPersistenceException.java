@@ -9,16 +9,16 @@ package com.sg.classroster.dao;
  *
  * @author Sumeet
  */
-public class ClassRosterDaoException extends Exception{
+public class ClassRosterPersistenceException extends Exception{
     
     //Takes string message and calls matching constructor in
     //Exception class using super
-    public ClassRosterDaoException(String message) {
+    public ClassRosterPersistenceException(String message) {
         super(message);
     }
     
     //Takes string and cause and calls matching constructor
-    public ClassRosterDaoException(String message, Throwable cause) {
+    public ClassRosterPersistenceException(String message, Throwable cause) {
         super(message, cause);
     }
     
