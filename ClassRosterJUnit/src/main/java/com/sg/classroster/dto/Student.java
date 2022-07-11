@@ -53,9 +53,10 @@ public class Student {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 19 * hash + Objects.hashCode(this.firstName);
-        hash = 19 * hash + Objects.hashCode(this.lastName);
-        hash = 19 * hash + Objects.hashCode(this.studentId);
+        hash = 17 * hash + Objects.hashCode(this.firstName);
+        hash = 17 * hash + Objects.hashCode(this.lastName);
+        hash = 17 * hash + Objects.hashCode(this.studentId);
+        hash = 17 * hash + Objects.hashCode(this.cohort);
         return hash;
     }
 
@@ -90,5 +91,6 @@ public class Student {
     public String toString() {
         return "Student{" + "firstName=" + firstName + ", lastName=" + lastName + ", studentId=" + studentId + ", cohort=" + cohort + '}';
     }
+   
     
 }

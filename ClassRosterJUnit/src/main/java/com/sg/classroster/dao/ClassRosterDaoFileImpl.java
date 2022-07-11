@@ -6,7 +6,6 @@
 package com.sg.classroster.dao;
 import com.sg.classroster.dto.*;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -34,7 +33,8 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
     }
 
     public ClassRosterDaoFileImpl(String rosterTextFile){
-        ROSTER_FILE = rosterTextFile;
+        ROSTER_FILE = "testroster.txt";
+        //ROSTER_FILE = rosterTextFile;
     }
     
     //Read text into a student object

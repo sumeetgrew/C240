@@ -1,0 +1,13 @@
+public VendingMachineDaoFileImpl() throws VendingMachinePersistenceException {
+    INVENTORY_FILE = "inventory.txt";
+    try {
+      File f = new File(INVENTORY_FILE);
+      if (!(f.exists() && !f.isDirectory())) {
+        FileWriter fw = new FileWriter(INVENTORY_FILE);
+        fw.close();
+      }
+    } catch (IOException e) {
+      throw new VendingMachinePersistenceException("Could not create file database.");
+    }
+    loadInventory();
+  }
